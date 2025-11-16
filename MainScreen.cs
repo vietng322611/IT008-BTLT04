@@ -35,7 +35,7 @@ public partial class MainScreen : Form
         {
             // Initial position
             X = 100,
-            Y = this.Height-220-38,
+            Y = Height-220-38,
         };
 
         fire = new Sprite(
@@ -107,7 +107,7 @@ public partial class MainScreen : Form
         CreateBackGround();
     }
 
-    private void OnKeyDown(object sender, KeyEventArgs e)
+    private void MainScreen_KeyDown(object? sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
         {
@@ -117,12 +117,14 @@ public partial class MainScreen : Form
             case Keys.Down:
                 keyDown = true;
                 break;
+            default:
+                return;
         }
 
         UpdatePlayerVelocity();
     }
 
-    private void OnKeyUp(object sender, KeyEventArgs e)
+    private void MainScreen_KeyUp(object? sender, KeyEventArgs e)
     {
         switch (e.KeyCode)
         {
@@ -132,6 +134,8 @@ public partial class MainScreen : Form
             case Keys.Down:
                 keyDown = false;
                 break;
+            default:
+                return;
         }
 
         UpdatePlayerVelocity();
@@ -186,7 +190,7 @@ public partial class MainScreen : Form
         timeCount.Interval = 1000;
         timeCount.Tick += TimeCount_Tick;
         timeCount.Start();
-        GameOver();
+        // GameOver();
         //KHOA GAMEOVER() KHI CAN TEST NHAN VAT
     }
 
@@ -194,13 +198,13 @@ public partial class MainScreen : Form
     {
         pictureBox1.Left -= 5;
         pictureBox2.Left -= 5;
-        if (pictureBox1.Right<=0)
+        if (pictureBox1.Right <= 0)
         {
-            pictureBox1.Left = this.Width;
+            pictureBox1.Left = Width;
         }
-        if (pictureBox2.Right<=0)
+        if (pictureBox2.Right <= 0)
         {
-            pictureBox2.Left = this.Width;
+            pictureBox2.Left = Width;
         }
     }
     
