@@ -29,29 +29,15 @@ partial class MainScreen
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainScreen));
-        pictureBox1 = new PictureBox();
         TimeBox = new Label();
         Score = new Label();
-        ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
         SuspendLayout();
-        // 
-        // pictureBox1
-        // 
-        pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-        pictureBox1.ErrorImage = (Image)resources.GetObject("pictureBox1.ErrorImage");
-        pictureBox1.InitialImage = (Image)resources.GetObject("pictureBox1.InitialImage");
-        pictureBox1.Location = new Point(0, 415);
-        pictureBox1.Name = "pictureBox1";
-        pictureBox1.Size = new Size(822, 38);
-        pictureBox1.TabIndex = 0;
-        pictureBox1.TabStop = false;
         // 
         // TimeBox
         // 
         TimeBox.BackColor = Color.FromArgb(255, 255, 128);
         TimeBox.Font = new Font("Sesame", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        TimeBox.Location = new Point(584, 9);
+        TimeBox.Location = new Point(1050, 19);
         TimeBox.Name = "TimeBox";
         TimeBox.Size = new Size(200, 35);
         TimeBox.TabIndex = 1;
@@ -62,7 +48,7 @@ partial class MainScreen
         // 
         Score.BackColor = Color.FromArgb(255, 255, 128);
         Score.Font = new Font("Sesame", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        Score.Location = new Point(584, 54);
+        Score.Location = new Point(1050, 71);
         Score.Name = "Score";
         Score.Size = new Size(200, 35);
         Score.TabIndex = 2;
@@ -74,19 +60,16 @@ partial class MainScreen
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         BackgroundImage = Properties.Resources.MainScreenBackground__1_;
-        ClientSize = new Size(800, 450);
+        BackgroundImageLayout = ImageLayout.Stretch;
+        ClientSize = new Size(1262, 673);
         Controls.Add(Score);
         Controls.Add(TimeBox);
-        Controls.Add(pictureBox1);
         Name = "MainScreen";
         Text = "Form1";
-        ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
         ResumeLayout(false);
     }
 
     #endregion
-
-    private PictureBox pictureBox1;
     private Label TimeBox;
     private Label Score;
 }

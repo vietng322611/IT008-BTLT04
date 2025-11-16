@@ -39,7 +39,7 @@ public partial class MainScreen : Form
         {
             // Initial position
             X = 100,
-            Y = this.Height-220-38,
+            Y = this.Height-220-80,
         };
 
         fire = new Sprite(
@@ -93,6 +93,7 @@ public partial class MainScreen : Form
                 if (IsColliding(m, player))
                 {
                     monster.RemoveAt(i);
+                    //GameOver();
                     continue;
                 }
                 //Khi quai cham tuong
@@ -177,19 +178,10 @@ public partial class MainScreen : Form
     void CreateBackGround()
     {
         PlaySoundOfMainScreen();
-        pictureBox2.Size=new Size(pictureBox1.Width, pictureBox1.Height);
-        pictureBox2.BackgroundImage=pictureBox1.BackgroundImage;
-        pictureBox1.Left = 0;
-        pictureBox2.Top = pictureBox1.Top;
-        pictureBox2.Left = pictureBox1.Right;
-        this.Controls.Add(pictureBox2);
-        TimeChangeGround.Interval= speedground;
-        TimeChangeGround.Tick += TimeChangeGround_Tick;
-        TimeChangeGround.Start();
         TimeCount.Interval = 1000;
         TimeCount.Tick += TimeCount_Tick;
         TimeCount.Start();
-        GameOver();
+        //GameOver();
         //KHOA GAMEOVER() KHI CAN TEST NHAN VAT
     }
     void PlaySoundOfMainScreen()
@@ -198,19 +190,6 @@ public partial class MainScreen : Form
         SoundMainScreen.PlayLooping();
     }
 
-    private void TimeChangeGround_Tick(object? sender, EventArgs e)
-    {
-        pictureBox1.Left -= 5;
-        pictureBox2.Left -= 5;
-        if (pictureBox1.Right<=0)
-        {
-            pictureBox1.Left = this.Width;
-        }
-        if (pictureBox2.Right<=0)
-        {
-            pictureBox2.Left = this.Width;
-        }
-    }
     private void TimeCount_Tick(object? sender, EventArgs e)
     {
         ++time;
