@@ -4,7 +4,7 @@ namespace BTLT04
 {
     public partial class GameOverScreen : Form
     {
-        public GameOverScreen(Result result)
+        public GameOverScreen(Result result) : this()
         {
             TimePlayBox.Text += result.PlayTime.ToString();
             ScoreBox.Text += result.Score.ToString();
@@ -16,6 +16,12 @@ namespace BTLT04
             PlayGameOverMusic();
             RestartButton.Click += RestartButton_Click;
             BackStartScreenButton.Click += BackStartScreenButton_Click;
+            FormClosed += GameOverScreen_FormClosed;
+        }
+
+        private void GameOverScreen_FormClosed(object? sender, FormClosedEventArgs e)
+        {
+            Owner.Show();
         }
 
         private void BackStartScreenButton_Click(object? sender, EventArgs e)
@@ -37,7 +43,7 @@ namespace BTLT04
         {
             var musicGameOver = new SoundPlayer("Resources/SoundOfFail.wav");
             musicGameOver.Play();
-            await Task.Delay(3000);
+            await Task.Delay(2000);
             musicGameOver = new SoundPlayer("Resources/MainScreenSound.wav");
             musicGameOver.PlayLooping();
         }
