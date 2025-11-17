@@ -16,7 +16,8 @@ public class Sprite
     public float Y { get; set; }
     public float SpeedX { get; set; }
     public float SpeedY { get; set; }
-    public bool IsFinished { get; set; } = false;
+    public bool IsFinished { get; set; }
+    public Rectangle Bounds => new((int)X, (int)Y, FrameWidth/2, FrameHeight);
 
     public Sprite(
         string filePath,
@@ -44,16 +45,16 @@ public class Sprite
     public void Update()
     {
         if (IsFinished) return;
-        
+
         var now = Environment.TickCount64;
         if (now - lastFrameTime < FrameTime) return;
-        
+
         lastFrameTime = now;
 
         // Move sprite
         X += SpeedX;
         Y += SpeedY;
-        
+
         if (Loop)
             currentFrame = (currentFrame + 1) % FrameCount;
         else
@@ -72,6 +73,6 @@ public class Sprite
 
         g.DrawImage(spriteSheet, destRect, srcRect.X, srcRect.Y, srcRect.Width, srcRect.Height, GraphicsUnit.Pixel, attr);
     }
-    
+
     public void Dispose() => spriteSheet.Dispose();
 }

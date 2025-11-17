@@ -29,15 +29,15 @@ partial class MainScreen
     /// </summary>
     private void InitializeComponent()
     {
-        TimeBox = new Label();
-        Score = new Label();
+        TimeBox = new System.Windows.Forms.Label();
+        Score = new System.Windows.Forms.Label();
         SuspendLayout();
         // 
         // TimeBox
         // 
-        TimeBox.BackColor = Color.FromArgb(255, 255, 128);
-        TimeBox.Font = new Font("Sesame", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        TimeBox.Location = new Point(1050, 19);
+        TimeBox.BackColor = System.Drawing.Color.FromArgb(((int)((byte)255)), ((int)((byte)255)), ((int)((byte)128)));
+        TimeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        TimeBox.Location = new System.Drawing.Point(1050, 19);
         TimeBox.Name = "TimeBox";
         TimeBox.Size = new System.Drawing.Size(200, 35);
         TimeBox.TabIndex = 1;
@@ -46,9 +46,9 @@ partial class MainScreen
         // 
         // Score
         // 
-        Score.BackColor = Color.FromArgb(255, 255, 128);
-        Score.Font = new Font("Sesame", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        Score.Location = new Point(1050, 71);
+        Score.BackColor = System.Drawing.Color.FromArgb(((int)((byte)255)), ((int)((byte)255)), ((int)((byte)128)));
+        Score.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)0));
+        Score.Location = new System.Drawing.Point(1050, 71);
         Score.Name = "Score";
         Score.Size = new System.Drawing.Size(200, 35);
         Score.TabIndex = 2;
@@ -57,14 +57,13 @@ partial class MainScreen
         // 
         // MainScreen
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
-        AutoScaleMode = AutoScaleMode.Font;
-        BackgroundImage = Properties.Resources.MainScreenBackground__1_;
-        BackgroundImageLayout = ImageLayout.Stretch;
-        ClientSize = new Size(1262, 673);
+        AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+        ClientSize = new System.Drawing.Size(1262, 673);
         Controls.Add(Score);
         Controls.Add(TimeBox);
-        Name = "MainScreen";
+        StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "Form1";
         ResumeLayout(false);
     }

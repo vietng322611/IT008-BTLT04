@@ -3,24 +3,20 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace BTLT04;
 
-// TODO: Cập nhật currentLane theo vị trí của player để bắn lửa theo lane
-// Cập nhật lane khi: player.Y + 0.5 * player.FrameHeight <= lanes[currentLane - 1]
-// Kiểm tra hàng bắn lửa: player.Y + 0.5 * player.FrameHeight <= lanes[currentLane + 1] ? currentLane : currentLane + 1
-
 public partial class MainScreen : Form
 {
     private readonly Sprite player;
     private readonly List<List<Sprite>> monsters = [[], [], []]; // 3 lanes
-    private readonly List<List<Sprite>> fires = [[], [], []]; // 3 lanes
-    private readonly List<Sprite> explosions = [];
+    private readonly List<Sprite> fires = [], explosions = [];
     private readonly Timer timer;
-    private const float MoveSpeed = 3;
+    private const float MoveSpeed = 10;
     private bool keyUp;
     private bool keyDown;
     private readonly int[] lanes = [20, 140, 260]; //Hang quai spawn
     private readonly Random rnd = new Random();
     private int spawnCooldown;
-    private int currentLane;
+    private int DemHoiChieu = 50;
+    private const int ThoiGianHoiChieu = 50;
 
     public MainScreen()
     {
@@ -42,17 +38,16 @@ public partial class MainScreen : Form
         {
             // Initial position
             X = 100,
-            Y = Height-220-80,
+            Y = lanes[1], //spawn lane giua
         };
-        currentLane = lanes.Length / 2;
-        
+
         // Sprite animation timer
         timer = new Timer();
         timer.Interval = 14; // ~60 FPS
         timer.Tick += (_, _) =>
         {
             UpdatePlayerVelocity();
-            
+
             spawnCooldown++;
             if (spawnCooldown >= rnd.Next(70, 600))
             {
@@ -67,32 +62,49 @@ public partial class MainScreen : Form
 
             for (var i = 0; i < lanes.Length; i++)
             {
-                if (monsters[i].Count == 0) continue;
+                foreach(var monster in monsters[i].ToList())
+                {
+                    monster.Update();
 
-                var monster = monsters[i][0];
-                monster.Update();
-                
-                if (IsColliding(monster, player))
-                {
-                    monsters[i].RemoveAt(0);
-                    //GameOver();
-                    continue;
-                }
-                if (monster.X + 170 < 0)
-                {
-                    monster.X = ClientSize.Width + rnd.Next(0, 400);
-                    monster.Y = lanes[rnd.Next(lanes.Length)];
+                    if (IsColliding(monster, player))
+                    {
+                        monsters[i].Remove(monster);
+                        monster.Dispose();
+                        //GameOver();
+                        continue;
+                    }
 
-                    maxMonsters = rnd.Next(3, 11); //Tang do kho 
+                    if (monster.X + monster.FrameWidth < 0)
+                    {
+                        monsters[i].Remove(monster);
+                        monster.Dispose();
+                        maxMonsters = rnd.Next(3, 11); //Tang do kho
+                    }
                 }
-                
-                if (fires[i].Count == 0) continue;
-                if (IsColliding(monster, fires[i][0]))
+            }
+            
+            foreach (var fire in fires.ToList())
+            {
+                fire.Update();
+                for (var i = 0; i < lanes.Length; i++)
+                    foreach (var monster in monsters[i].ToList()
+                                 .Where(monster => IsColliding(fire, monster)))
+                    {
+                        explosions.Add(CreateExplosion(monster.X + 70, monster.Y + 85));
+                        fires.Remove(fire);
+                        fire.Dispose();
+                        monsters[i].Remove(monster);
+                        monster.Dispose();
+                        goto NextFire; // stop checking this bullet
+                    }
+
+                if (fire.X + fire.FrameWidth > ClientSize.Width)
                 {
-                    explosions.Add(CreateExplosion(monster.X, monster.Y));
-                    fires[i].RemoveAt(0);
-                    monsters[i].RemoveAt(0);
+                    fires.Remove(fire);
+                    fire.Dispose();
                 }
+
+                NextFire:;
             }
             
             foreach (var explosion in explosions.ToList())
@@ -104,14 +116,14 @@ public partial class MainScreen : Form
                     explosion.Dispose();
                 }
             }
-            
+            DemHoiChieu++;
             Invalidate();
         };
         timer.Start();
-        
+
         KeyDown += MainScreen_KeyDown;
         KeyUp += MainScreen_KeyUp;
-        
+
         CreateBackGround();
     }
 
@@ -126,7 +138,11 @@ public partial class MainScreen : Form
                 keyDown = true;
                 break;
             case Keys.A:
-                fires[currentLane].Add(CreateFire(player.X, player.Y));
+                if (DemHoiChieu >= ThoiGianHoiChieu)
+                {
+                    fires.Add(CreateFire(player.X + player.FrameWidth / 2f, player.Y + player.FrameHeight / 2f - 24));
+                    DemHoiChieu = 0;
+                }
                 break;
             default:
                 return;
@@ -152,38 +168,35 @@ public partial class MainScreen : Form
     {
         player.SpeedY = (keyDown ? MoveSpeed : 0) - (keyUp ? MoveSpeed : 0);
         if (player.SpeedY != 0)
+        {
             player.Update();
+            player.Y = Math.Max(0, Math.Min(player.Y, ClientSize.Height - player.FrameHeight));
+        }
     }
 
     protected override void OnPaint(PaintEventArgs e)
     {
+        player.Draw(e.Graphics);
         for (var i = 0; i < lanes.Length; i++)
-        {
             foreach (var monster in monsters[i])
                 monster.Draw(e.Graphics);
-            foreach (var fire in fires[i])
-                fire.Draw(e.Graphics);
-        }
-        
-        foreach (var explosion in explosions) // ToList to avoid modifying while iterating
+        foreach (var fire in fires)
+            fire.Draw(e.Graphics);
+        foreach (var explosion in explosions)
             explosion.Draw(e.Graphics);
-        
-        player.Draw(e.Graphics);
     }
 
     protected override void OnFormClosed(FormClosedEventArgs e)
-    {  
+    {
         player.Dispose();
         for (var i = 0; i < lanes.Length; i++)
-        {
             foreach (var monster in monsters[i])
                 monster.Dispose();
-            foreach (var fire in fires[i])
-                fire.Dispose();
-        }
+        foreach (var fire in fires)
+            fire.Dispose();
         foreach (var explosion in explosions)
             explosion.Dispose();
-        
+
         base.OnFormClosed(e);
     }
 
@@ -212,7 +225,7 @@ public partial class MainScreen : Form
         ++time;
         TimeBox.Text = "TIME: " + time;
     }
-    
+
     //void GameOver()
     //{
     //    string date = DateTime.Now.ToString("dd/MM/yy HH:mm:ss");
@@ -223,7 +236,7 @@ public partial class MainScreen : Form
     //    gameOverScreen.Owner = this.Owner;
     //    this.Close();
     //}
-    
+
     private async Task GameOver()
     {
         if (Owner is not StartScreen sc)
@@ -231,7 +244,7 @@ public partial class MainScreen : Form
             Close();
             return;
         }
-        
+
         await Task.Delay(10000);
         var date = DateTime.Now.ToString("dd/MM/yy HH:mm:ss");
         var results = new Result() { Time = date, PlayTime = time, Score = score };
@@ -241,14 +254,14 @@ public partial class MainScreen : Form
         gameOverScreen.Owner = sc;
         Close();
     }
-    
+
     private Sprite CreateMonster()
     {
         return new Sprite(
             "Resources/Images/monster.jpg",
-            frameWidth:170,
-            frameHeight:140,
-            frameCount:6,
+            frameWidth: 170,
+            frameHeight: 140,
+            frameCount: 6,
             transparentColorFrom: Color.FromArgb(70, 110, 150),
             transparentColorTo: Color.FromArgb(140, 180, 255)
         )
@@ -272,32 +285,30 @@ public partial class MainScreen : Form
             transparentColorTo: Color.White
         )
         {
-            X = x, Y = y,
-            SpeedX = 2
+            X = x,
+            Y = y,
+            SpeedX = 10
         };
     }
-    
+
     private static Sprite CreateExplosion(float x, float y)
     {
         // x: monster.X
         // y: monster.Y
         return new Sprite(
-            "Resources/Images/explosion.png",
-            frameWidth: 32,
-            frameHeight: 32,
-            frameCount: 12,
-            loop: false,
-            transparentColorFrom: Color.FromArgb(0, 248, 0),
-            transparentColorTo: Color.FromArgb(6, 248, 6)
-        )
-        { X = x, Y = y };
+                "Resources/Images/explosion.png",
+                frameWidth: 32,
+                frameHeight: 32,
+                frameCount: 12,
+                loop: false,
+                transparentColorFrom: Color.FromArgb(0, 248, 0),
+                transparentColorTo: Color.FromArgb(6, 248, 6)
+            )
+            { X = x, Y = y };
     }
-    
+
     private static bool IsColliding(Sprite a, Sprite b)
     {
-        var dx = (a.X + a.FrameWidth / 2.0) - (b.X + b.FrameWidth / 2.0);
-        var dy = (a.Y + a.FrameHeight / 2.0) - (b.Y + b.FrameHeight / 2.0);
-
-        return Math.Abs(dx) < 50 && Math.Abs(dy) < 50;
+        return a.Bounds.IntersectsWith(b.Bounds);
     }
 }

@@ -6,7 +6,7 @@ namespace BTLT04
     {
         private readonly SoundPlayer player = new SoundPlayer("Resources/StartScreenSound.wav");
         private readonly List<Result> results = [];
-        
+
         public StartScreen()
         {
             InitializeComponent();
@@ -22,12 +22,12 @@ namespace BTLT04
             historyScreen.Show();
             Hide();
         }
-        
+
         public void AddItemToList(Result item)
         {
             results.Add(item);
         }
-        
+
         private void PlayMusic(object? sender, EventArgs e)
         {
             player.PlayLooping();

@@ -9,55 +9,55 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Resources\Images\explosion.png" />
-      <None Remove="Resources\MainScreenSound.wav" />
-      <None Remove="Resources\SoundOfFail.wav" />
-      <None Remove="Resources\StartScreenSound.wav" />
-      <Content Include="Resources\Images\explosion.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Resources\Images\fire.png" />
-      <Content Include="Resources\Images\fire.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Resources\Images\monster.jpg" />
-      <Content Include="Resources\Images\monster.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <None Remove="Resources\Images\explosion.png"/>
+        <None Remove="Resources\MainScreenSound.wav"/>
+        <None Remove="Resources\SoundOfFail.wav"/>
+        <None Remove="Resources\StartScreenSound.wav"/>
+        <Content Include="Resources\Images\explosion.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Resources\Images\fire.png"/>
+        <Content Include="Resources\Images\fire.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Resources\Images\monster.jpg"/>
+        <Content Include="Resources\Images\monster.jpg">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Resources\Images\wizard.jpg" />
-      <Content Include="Resources\Images\wizard.jpg">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Resources\MainScreenSound.wav">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Resources\SoundOfFail.wav">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <None Remove="Resources\Images\wizard.jpg"/>
+        <Content Include="Resources\Images\wizard.jpg">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Resources\MainScreenSound.wav">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Resources\SoundOfFail.wav">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Resources\StartScreenSound.wav">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <Content Include="Resources\StartScreenSound.wav">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Properties\Resources.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Resources.resx</DependentUpon>
-      </Compile>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Properties\Resources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
 </Project>
