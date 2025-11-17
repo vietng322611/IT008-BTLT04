@@ -256,7 +256,7 @@ public partial class MainScreen : Form
         )
         {
             SpeedX = -rnd.Next(2, 7),
-            X = ClientSize.Width + rnd.Next(0, 100),
+            X = ClientSize.Width + rnd.Next(0, 15),
             Y = lanes[rnd.Next(lanes.Length)] //Tang toc quai ngau nhien
         };
     }
