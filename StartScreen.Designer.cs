@@ -68,7 +68,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "StartScreen";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "StartScreen";
+            Text = "Start game";
             ResumeLayout(false);
         }
 

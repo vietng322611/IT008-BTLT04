@@ -66,7 +66,7 @@ partial class MainScreen
         Controls.Add(TimeBox);
         Name = "MainScreen";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Form1";
+        Text = "Game";
         ResumeLayout(false);
     }
 

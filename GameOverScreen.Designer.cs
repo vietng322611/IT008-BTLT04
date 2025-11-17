@@ -91,9 +91,8 @@
             Controls.Add(TimePlayBox);
             Controls.Add(BackStartScreenButton);
             Controls.Add(RestartButton);
-            Name = "GameOverScreen";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "GameOverScreen";
+            Text = "Game over";
             ResumeLayout(false);
         }
 

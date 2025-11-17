@@ -83,11 +83,9 @@
             Controls.Add(BackStartScreenButton);
             Controls.Add(HistoryTable);
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "HistoryScreen";
+            Text = "History";
             ((System.ComponentModel.ISupportInitialize)HistoryTable).EndInit();
             ResumeLayout(false);
-
-            StartPosition = FormStartPosition.CenterScreen;
         }
 
         #endregion
