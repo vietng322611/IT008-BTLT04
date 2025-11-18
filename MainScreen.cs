@@ -18,6 +18,7 @@ public partial class MainScreen : Form
     private int spawnCooldown;
     private int DemHoiChieu = 50;
     private const int ThoiGianHoiChieu = 50;
+    bool isClosingByGameOver = false;
 
     public MainScreen()
     {
@@ -192,6 +193,13 @@ public partial class MainScreen : Form
 
     protected override void OnFormClosed(FormClosedEventArgs e)
     {
+        if (!isClosingByGameOver)
+        {
+            if (this.Owner != null)
+                this.Owner.Show();
+            timer.Stop();
+            timeCount.Stop();
+        }
         player.Dispose();
         for (var i = 0; i < lanes.Length; i++)
             foreach (var monster in monsters[i])
@@ -234,14 +242,15 @@ public partial class MainScreen : Form
     void GameOver()
     {
         string date = DateTime.Now.ToString("dd/MM/yy HH:mm:ss");
+        timer.Stop();
+        timeCount.Stop();
         Result results = new Result() { Time = date, PlayTime = time, Score = score };
         var sc = Owner as StartScreen;
         if (sc != null) sc.AddItemToList(results);
         GameOverScreen gameOverScreen = new GameOverScreen(results);
         gameOverScreen.Owner = sc;
         gameOverScreen.Show();
-        timer.Stop();
-        timeCount.Stop();
+        isClosingByGameOver = true;
         this.Close();
     }
     private Sprite CreateMonster()
