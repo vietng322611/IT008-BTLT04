@@ -264,7 +264,7 @@ public partial class MainScreen : Form
             transparentColorTo: Color.FromArgb(140, 180, 255)
         )
         {
-            SpeedX = -rnd.Next(2, 7),
+            SpeedX = -rnd.Next(4, 9),
             X = ClientSize.Width + rnd.Next(0, 15),
             Y = lanes[rnd.Next(lanes.Length)] //Tang toc quai ngau nhien
         };
